@@ -1,7 +1,10 @@
 package tetris;
 
+import tetrominos.*;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class GameArea extends JPanel {
 
@@ -11,6 +14,8 @@ public class GameArea extends JPanel {
     private Color[][] background;
 
     private TetrisBlock block;
+
+    private TetrisBlock[] blocks;
 
     public GameArea(JPanel placeholder, int columns, int rows) {
         placeholder.setVisible(false);
@@ -23,10 +28,20 @@ public class GameArea extends JPanel {
         gridCellSize = this.getBounds().width / gridColumns;
 
         background = new Color[gridRows][gridColumns];
+
+        blocks = new TetrisBlock[]{ new IShape(),
+                new JShape(),
+                new LShape(),
+                new OShape(),
+                new SShape(),
+                new TShape(),
+                new ZShape()
+        };
     }
 
-    public void clearLines() {
+    public int clearLines() {
         boolean lineFilled;
+        int linesCleared = 0;
         for (int row = gridRows - 1; row >= 0; --row) {
             lineFilled = true;
             for (int col = 0; col < gridColumns; ++col) {
@@ -36,15 +51,17 @@ public class GameArea extends JPanel {
                 }
             }
 
-            if(lineFilled) {
+            if (lineFilled) {
                 clearLine(row);
                 shiftDown(row);
                 clearLine(0);
+                ++linesCleared;
 
                 ++row;
                 repaint();
             }
         }
+        return linesCleared;
     }
 
     private void clearLine(int row) {
@@ -163,6 +180,19 @@ public class GameArea extends JPanel {
 
     public void rotateBlockRight() {
         if (block == null) return;
+
+        if (block.getLeftEdge() < 0) {
+            block.setX(0);
+        }
+
+        if (block.getRightEdge() >= gridColumns) {
+            block.setX(gridColumns - block.getWidth());
+        }
+
+        if (block.getBottomEdge() >= gridRows) {
+            block.setY(gridRows - block.getHeight());
+        }
+
         block.rotateRight();
         repaint();
     }
@@ -275,7 +305,8 @@ public class GameArea extends JPanel {
     }
 
     public void spawnBlock() {
-        block = new TetrisBlock(new int[][]{ { 1, 0 }, { 1, 0 }, { 1, 1 } }, Color.orange);
+        Random rand = new Random();
+        block = blocks[rand.nextInt(blocks.length)];
         block.spawn(gridColumns);
     }
 
