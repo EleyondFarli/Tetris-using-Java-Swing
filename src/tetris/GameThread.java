@@ -20,6 +20,13 @@ public class GameThread extends Thread {
                     e.printStackTrace();
                 }
             }
+
+            if (gameArea.isBlockOutOfBounds()) {
+                System.out.println("Game Over");
+                break;
+            }
+            gameArea.moveBlockToBackground();
+            gameArea.clearLines();
         }
     }
 }

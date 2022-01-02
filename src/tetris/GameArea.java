@@ -62,7 +62,7 @@ public class GameArea extends JPanel {
     }
 
 
-    private void moveBlockToBackground() {
+    public void moveBlockToBackground() {
         int[][] shape = block.getShape();
         int height = block.getHeight();
         int width = block.getWidth();
@@ -121,10 +121,18 @@ public class GameArea extends JPanel {
         g.drawRect(x, y, gridCellSize, gridCellSize);
     }
 
+    public boolean isBlockOutOfBounds() {
+        if (block.getY() < 0) {
+            block = null;
+            return true;
+        }
+
+        return false;
+    }
+
     public boolean moveBlockDown() {
+        if (block == null) return false;
         if (!checkBottom()) {
-            moveBlockToBackground();
-            clearLines();
             return false;
         }
 
@@ -134,6 +142,7 @@ public class GameArea extends JPanel {
     }
 
     public void moveBlockRight() {
+        if (block == null) return;
         if (!checkRight()) {
             return;
         }
@@ -143,6 +152,7 @@ public class GameArea extends JPanel {
     }
 
     public void moveBlockLeft() {
+        if (block == null) return;
         if (!checkLeft()) {
             return;
         }
@@ -152,16 +162,19 @@ public class GameArea extends JPanel {
     }
 
     public void rotateBlockRight() {
+        if (block == null) return;
         block.rotateRight();
         repaint();
     }
 
     public void rotateBlockLeft() {
+        if (block == null) return;
         block.rotateLeft();
         repaint();
     }
 
     public void hardDropBlock() {
+        if (block == null) return;
         while (checkBottom()) {
             block.moveDown();
         }
