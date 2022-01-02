@@ -12,11 +12,13 @@ public class GameThread extends Thread {
     public void run() {
 
         while (true) {
-            try {
-                gameArea.moveBlockDown();
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            gameArea.spawnBlock();
+            while (gameArea.moveBlockDown()) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

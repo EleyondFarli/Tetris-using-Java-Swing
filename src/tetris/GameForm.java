@@ -1,17 +1,73 @@
 package tetris;
 
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
 public class GameForm extends javax.swing.JFrame {
 
     private GameArea gameArea;
+    private int speed;
 
     public GameForm() {
         initComponents();
 
         gameArea = new GameArea(gameAreaPlaceholder, 10, 20);
-        this.add( gameArea );
+        this.add(gameArea);
 
+        initControls();
+        speed = 2;
         startGame();
+    }
+
+    private void initControls() {
+        InputMap inMap = this.getRootPane().getInputMap();
+        ActionMap actMap = this.getRootPane().getActionMap();
+
+        inMap.put(KeyStroke.getKeyStroke("RIGHT"), "right");
+        inMap.put(KeyStroke.getKeyStroke("LEFT"), "left");
+        inMap.put(KeyStroke.getKeyStroke("UP"), "rightRotation");
+        inMap.put(KeyStroke.getKeyStroke("Z"), "leftRotation");
+        inMap.put(KeyStroke.getKeyStroke("DOWN"), "softDrop");
+        inMap.put(KeyStroke.getKeyStroke("SPACE"), "hardDrop");
+
+        actMap.put("right", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameArea.moveBlockRight();
+            }
+        });
+        actMap.put("left", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameArea.moveBlockLeft();
+            }
+        });
+        actMap.put("rightRotation", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameArea.rotateBlockRight();
+            }
+        });
+        actMap.put("leftRotation", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameArea.rotateBlockLeft();
+            }
+        });
+        actMap.put("softDrop", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameArea.softDropBlock();
+            }
+        });
+        actMap.put("hardDrop", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameArea.hardDropBlock();
+            }
+        });
+
     }
 
     public void startGame() {
