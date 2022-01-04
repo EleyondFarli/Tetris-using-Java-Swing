@@ -18,7 +18,7 @@ public class GameArea extends JPanel {
     private TetrisBlock[] blocks;
 
     public GameArea(JPanel placeholder, int columns, int rows) {
-        placeholder.setVisible(false);
+//        placeholder.setVisible(false);
         this.setBounds(placeholder.getBounds());
         this.setBackground(placeholder.getBackground());
         this.setBorder(placeholder.getBorder());
@@ -27,7 +27,7 @@ public class GameArea extends JPanel {
         gridRows = rows;
         gridCellSize = this.getBounds().width / gridColumns;
 
-        background = new Color[gridRows][gridColumns];
+        initBackGroundArray();
 
         blocks = new TetrisBlock[]{ new IShape(),
                 new JShape(),
@@ -37,6 +37,11 @@ public class GameArea extends JPanel {
                 new TShape(),
                 new ZShape()
         };
+    }
+
+    public void initBackGroundArray()
+    {
+        background = new Color[gridRows][gridColumns];
     }
 
     public int clearLines() {
@@ -169,6 +174,7 @@ public class GameArea extends JPanel {
     }
 
     public void moveBlockLeft() {
+        //TODO: Implement kick table
         if (block == null) return;
         if (!checkLeft()) {
             return;
@@ -179,6 +185,7 @@ public class GameArea extends JPanel {
     }
 
     public void rotateBlockRight() {
+        //TODO: Implement kick table
         if (block == null) return;
 
         if (block.getLeftEdge() < 0) {
@@ -305,6 +312,7 @@ public class GameArea extends JPanel {
     }
 
     public void spawnBlock() {
+        // TODO: Implement 7-bag randomizer system
         Random rand = new Random();
         block = blocks[rand.nextInt(blocks.length)];
         block.spawn(gridColumns);

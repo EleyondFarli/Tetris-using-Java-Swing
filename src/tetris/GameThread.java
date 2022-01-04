@@ -9,13 +9,15 @@ public class GameThread extends Thread {
     private int scorePerLevel = 3;
     private int speedUpPerLevel = 100;
 
-    private int pause = 1000;
+    private int pause = 500;
 
     public GameThread(GameArea gameArea, GameForm gameForm) {
-
         this.gameArea = gameArea;
         this.gameForm = gameForm;
         this.level = 1;
+
+        gameForm.updateScore(score);
+        gameForm.updateLevel(level);
     }
 
     @Override
@@ -27,17 +29,23 @@ public class GameThread extends Thread {
                 try {
                     Thread.sleep(pause);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("Thread stopped");
+                    return;
                 }
             }
 
             if (gameArea.isBlockOutOfBounds()) {
-                System.out.println("Game Over");
+                Tetris.gameOver(score);
                 break;
             }
+
             gameArea.moveBlockToBackground();
-            score += gameArea.clearLines();
-            gameForm.updateScore(score);
+
+            int scoreToAdd = gameArea.clearLines();
+            if (scoreToAdd > 0) {
+                score += scoreToAdd;
+                gameForm.updateScore(score);
+            }
 
             int newLevel = score / scorePerLevel + 1;
             if (newLevel > level) {
