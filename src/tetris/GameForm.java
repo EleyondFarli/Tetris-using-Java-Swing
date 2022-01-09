@@ -8,6 +8,14 @@ import java.awt.event.ActionEvent;
 
 public class GameForm extends javax.swing.JFrame {
 
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.JPanel gameAreaPlaceholder;
+    private javax.swing.JLabel levelDisplay;
+    private javax.swing.JButton mainMenuButton;
+    private javax.swing.JLabel scoreDisplay;
+    private javax.swing.JPanel updatePanel;
+
     private final GameArea gameArea;
     private GameThread gameThread;
 
@@ -211,19 +219,7 @@ public class GameForm extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GameForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new GameForm().setVisible(true));
     }
-
-    // Variables declaration - do not modify
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
-    private javax.swing.JPanel gameAreaPlaceholder;
-    private javax.swing.JLabel levelDisplay;
-    private javax.swing.JButton mainMenuButton;
-    private javax.swing.JLabel scoreDisplay;
-    private javax.swing.JPanel updatePanel;
-    // End of variables declaration
 }
