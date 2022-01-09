@@ -1,5 +1,7 @@
 package tetris;
 
+import tetrominos.IShape;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -9,13 +11,15 @@ public class TetrisBlock {
     private int x, y;
     private int[][][] shapes;
     private int currentRotation;
+    private boolean isIBlock;
 
     private Color[] availableColors = {Color.green, Color.red, Color.magenta,
                                         Color.orange, Color.blue, Color.cyan};
 
-    public TetrisBlock(int[][] shape, Color color) {
+    public TetrisBlock(int[][] shape, Color color, boolean isIBlock) {
         this.shape = shape;
         this.color = color;
+        this.isIBlock = isIBlock;
 
         initShapes();
     }
@@ -36,7 +40,6 @@ public class TetrisBlock {
             }
             shape = shapes[i];
         }
-
     }
 
     public int[][] getShape() {
@@ -108,7 +111,7 @@ public class TetrisBlock {
 
 
 //        currentRotation = rand.nextInt(shapes.length);
-        currentRotation = 0;
+        currentRotation = 3;
         shape = shapes[currentRotation];
 
         y = -getHeight();
@@ -120,14 +123,51 @@ public class TetrisBlock {
     }
 
     public int getBottomEdge() {
+        int rows = shape.length;
+        int cols = shape[0].length;
+        for (int row = rows - 1; row >= 0; --row) {
+            for (int col = 0; col < cols; ++col) {
+                if (shape[row][col] == 1) {
+                    return y + row + 1;
+                }
+            }
+        }
         return y + getHeight();
     }
 
     public int getLeftEdge() {
-        return x;
+        int smallX = Integer.MAX_VALUE;
+        int rows = shape.length;
+        int cols = shape[0].length;
+        for (int col = 0; col < cols; ++col) {
+            for (int row = 0; row < rows; ++row) {
+                if (shape[row][col] == 1) {
+                    if (col < smallX) {
+                        smallX = col;
+                    }
+                }
+            }
+        }
+        return x + smallX - 1;
     }
 
     public int getRightEdge() {
-        return x + getWidth();
+        int bigX = Integer.MIN_VALUE;
+        int rows = shape.length;
+        int cols = shape[0].length;
+        for (int col = 0; col < cols; ++col) {
+            for (int row = 0; row < rows; ++row) {
+                if (shape[row][col] == 1) {
+                    if (col > bigX) {
+                        bigX = col;
+                    }
+                }
+            }
+        }
+        return x + bigX + 1;
+    }
+
+    public void setCurrentRotation(int currentRotation) {
+        this.currentRotation = currentRotation;
     }
 }

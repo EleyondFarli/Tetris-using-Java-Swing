@@ -80,9 +80,7 @@ public class GameArea extends JPanel {
 
     private void shiftDown(int row) {
         for (int r = row; r > 0; --r) {
-            for (int col = 0; col < gridColumns; ++col) {
-                background[r][col] = background[r - 1][col];
-            }
+            if (gridColumns >= 0) System.arraycopy(background[r - 1], 0, background[r], 0, gridColumns);
         }
     }
 
@@ -147,9 +145,19 @@ public class GameArea extends JPanel {
     }
 
     public boolean isBlockOutOfBounds() {
-        if (block.getY() < 0) {
-            block = null;
-            return true;
+        int[][] shape = block.getShape();
+        int width = block.getWidth();
+        int height = block.getHeight();
+
+        for (int col = 0; col < width; ++col) {
+            for (int row = 0; row < height; ++row) {
+                if (shape[row][col] == 1) {
+                    int y = row + block.getY();
+                    if (y < 0) {
+                        return true;
+                    }
+                }
+            }
         }
 
         return false;
@@ -221,7 +229,12 @@ public class GameArea extends JPanel {
     }
 
     public void softDropBlock() {
-
+        //TODO : implement in GameThread using softDropSpeed
+        if (block == null) return;
+        if (checkBottom()) {
+            block.moveDown();
+        }
+        repaint();
     }
 
     private boolean checkBottom() {
@@ -255,7 +268,7 @@ public class GameArea extends JPanel {
     }
 
     private boolean checkLeft() {
-        if (block.getLeftEdge() <= 0) {
+        if (block.getLeftEdge() < 0) {
             return false;
         }
 
@@ -273,8 +286,10 @@ public class GameArea extends JPanel {
                         break;
                     }
 
-                    if (background[y][x] != null) {
-                        return false;
+                    if (y >= 0 && y < getWidth()) {
+                        if (background[y][x] != null) {
+                            return false;
+                        }
                     }
                     break;
                 }
@@ -314,10 +329,11 @@ public class GameArea extends JPanel {
         return true;
     }
 
-    public void spawnBlock() {
+    public void spawnBlock(int blockNr) {
         // TODO: Implement 7-bag randomizer system
         Random rand = new Random();
-        block = blocks[rand.nextInt(blocks.length)];
+//        block = blocks[rand.nextInt(blocks.length)];
+        block = blocks[blockNr];
         block.spawn(gridColumns);
     }
 

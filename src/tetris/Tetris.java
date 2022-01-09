@@ -41,15 +41,17 @@ public class Tetris {
         audio.playGameover();
     }
 
-    public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                gameForm = new GameForm();
-                startupForm = new StartupForm();
-                leaderboardForm = new LeaderboardForm();
+    public static void playFall() {audio.playFall();}
 
-                startupForm.setVisible(true);
-            }
+    public static void playLevelUp() {audio.playLevelUp();}
+
+    public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(() -> {
+            gameForm = new GameForm();
+            startupForm = new StartupForm();
+            leaderboardForm = new LeaderboardForm();
+
+            startupForm.setVisible(true);
         });
     }
 }

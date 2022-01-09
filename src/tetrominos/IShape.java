@@ -7,7 +7,13 @@ import java.awt.*;
 public class IShape extends TetrisBlock {
 
     public IShape() {
-        super(new int[][] { {1, 1, 1, 1} }, Color.cyan);
+        super(new int[][]{
+                        { 0, 0, 0, 0 },
+                        { 0, 0, 0, 0 },
+                        { 1, 1, 1, 1 },
+                        { 0, 0, 0, 0 },
+                        { 0, 0, 0, 0 },
+                }, Color.cyan, true);
     }
 
     @Override

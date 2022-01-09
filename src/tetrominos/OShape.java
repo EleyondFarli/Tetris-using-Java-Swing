@@ -7,8 +7,9 @@ import java.awt.*;
 public class OShape extends TetrisBlock {
 
     public OShape() {
-        super(new int[][] { {1, 1},
-                            {1, 1}
-        }, Color.yellow);
+        super(new int[][] { {0, 1, 1},
+                            {0, 1, 1},
+                            {0, 0, 0}
+        }, Color.yellow, false);
     }
 }

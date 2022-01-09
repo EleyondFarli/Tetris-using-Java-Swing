@@ -2,12 +2,13 @@ package tetris;
 
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 
 public class GameForm extends javax.swing.JFrame {
 
-    private GameArea gameArea;
+    private final GameArea gameArea;
     private GameThread gameThread;
 
     public GameForm() {
@@ -57,6 +58,7 @@ public class GameForm extends javax.swing.JFrame {
         actMap.put("softDrop", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                gameThread.setSoftdropping(true);
                 gameArea.softDropBlock();
             }
         });
@@ -83,9 +85,11 @@ public class GameForm extends javax.swing.JFrame {
 
     public void updateLevel(int level) {
         levelDisplay.setText("Level: " + level);
+        if (level > 1) {
+            Tetris.playLevelUp();
+        }
     }
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
+
     private void initComponents() {
 
         gameAreaPlaceholder = new javax.swing.JPanel();
@@ -114,11 +118,11 @@ public class GameForm extends javax.swing.JFrame {
                         .addGap(0, 498, Short.MAX_VALUE)
         );
 
-        scoreDisplay.setFont(new java.awt.Font("Sitka Small", 1, 24)); // NOI18N
+        scoreDisplay.setFont(new java.awt.Font("Sitka Small", Font.BOLD, 24)); // NOI18N
         scoreDisplay.setText("Score: 0");
         scoreDisplay.setToolTipText("");
 
-        levelDisplay.setFont(new java.awt.Font("Sitka Small", 1, 36)); // NOI18N
+        levelDisplay.setFont(new java.awt.Font("Sitka Small", Font.BOLD, 36)); // NOI18N
         levelDisplay.setText("Level: 1");
 
         javax.swing.GroupLayout updatePanelLayout = new javax.swing.GroupLayout(updatePanel);
@@ -138,16 +142,12 @@ public class GameForm extends javax.swing.JFrame {
                                 .addComponent(levelDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        mainMenuButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        mainMenuButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14)); // NOI18N
         mainMenuButton.setText("Main Menu");
         mainMenuButton.setFocusable(false);
         mainMenuButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         mainMenuButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        mainMenuButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mainMenuButtonActionPerformed(evt);
-            }
-        });
+        mainMenuButton.addActionListener(evt -> mainMenuButtonActionPerformed(evt));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,7 +191,7 @@ public class GameForm extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
-    }// </editor-fold>
+    }
 
     private void mainMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {
         gameThread.interrupt();
@@ -200,7 +200,7 @@ public class GameForm extends javax.swing.JFrame {
     }
 
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -208,23 +208,13 @@ public class GameForm extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GameForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GameForm().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new GameForm().setVisible(true));
     }
 
     // Variables declaration - do not modify
