@@ -8,7 +8,7 @@ public class Tetris {
     private static StartupForm startupForm;
     private static LeaderboardForm leaderboardForm;
 
-    private static AudioPlayer audio = new AudioPlayer();
+    private static final AudioPlayer audio = new AudioPlayer();
 
     public static void start() {
         gameForm.setVisible(true);

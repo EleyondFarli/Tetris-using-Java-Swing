@@ -1,17 +1,21 @@
 package tetris;
 
-import javax.naming.ldap.SortKey;
 import javax.swing.*;
 import javax.swing.table.*;
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Vector;
 
 public class LeaderboardForm extends javax.swing.JFrame {
 
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable leaderboardTable;
+    private javax.swing.JButton mainMenuButton;
+
     private DefaultTableModel tableModel;
 
-    private String leaderboardFile = "highscores";
+    private final String leaderboardFile = "highscores";
 
     private TableRowSorter<TableModel> tableSorter;
 
@@ -62,8 +66,6 @@ public class LeaderboardForm extends javax.swing.JFrame {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         mainMenuButton = new javax.swing.JButton();
@@ -73,15 +75,11 @@ public class LeaderboardForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        mainMenuButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        mainMenuButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14)); // NOI18N
         mainMenuButton.setText("Main Menu");
         mainMenuButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         mainMenuButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        mainMenuButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mainMenuButtonActionPerformed(evt);
-            }
-        });
+        mainMenuButton.addActionListener(evt -> mainMenuButtonActionPerformed());
 
         leaderboardTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
@@ -91,10 +89,10 @@ public class LeaderboardForm extends javax.swing.JFrame {
                         "Player", "Score"
                 }
         ) {
-            Class[] types = new Class [] {
+            final Class[] types = new Class [] {
                     java.lang.Integer.class, java.lang.Integer.class
             };
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                     false, false
             };
 
@@ -133,9 +131,9 @@ public class LeaderboardForm extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
-    }// </editor-fold>
+    }
 
-    private void mainMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void mainMenuButtonActionPerformed() {
         this.setVisible(false);
         Tetris.showMainMenu();
     }
@@ -147,12 +145,7 @@ public class LeaderboardForm extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -160,28 +153,11 @@ public class LeaderboardForm extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LeaderboardForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LeaderboardForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LeaderboardForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(LeaderboardForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LeaderboardForm().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new LeaderboardForm().setVisible(true));
     }
 
-    // Variables declaration - do not modify
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable leaderboardTable;
-    private javax.swing.JButton mainMenuButton;
-    // End of variables declaration
 }

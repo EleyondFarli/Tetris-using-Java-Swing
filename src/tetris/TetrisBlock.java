@@ -1,7 +1,5 @@
 package tetris;
 
-import tetrominos.IShape;
-
 import java.awt.*;
 import java.util.Random;
 
@@ -165,9 +163,5 @@ public class TetrisBlock {
             }
         }
         return x + bigX + 1;
-    }
-
-    public void setCurrentRotation(int currentRotation) {
-        this.currentRotation = currentRotation;
     }
 }

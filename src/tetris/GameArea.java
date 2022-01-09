@@ -229,7 +229,6 @@ public class GameArea extends JPanel {
     }
 
     public void softDropBlock() {
-        //TODO : implement in GameThread using softDropSpeed
         if (block == null) return;
         if (checkBottom()) {
             block.moveDown();
@@ -330,7 +329,6 @@ public class GameArea extends JPanel {
     }
 
     public void spawnBlock(int blockNr) {
-        // TODO: Implement 7-bag randomizer system
         Random rand = new Random();
 //        block = blocks[rand.nextInt(blocks.length)];
         block = blocks[blockNr];
